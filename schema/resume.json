@@ -1,0 +1,146 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "WebPresence": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the web presence platform."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the web presence platform starting with 'https://'."
+        }
+      },
+      "required": ["name", "url"]
+    },
+    "WorkTenure": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start date of the work tenure."
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End date of the work tenure."
+        },
+        "employmentType": {
+          "type": "string",
+          "description": "Type of employment (e.g., Full-time, Part-time)."
+        }
+      },
+      "required": ["start", "end", "employmentType"]
+    },
+    "ExperienceHighlight": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "type": "string",
+          "description": "Details of the experience highlight."
+        },
+        "tags": {
+          "type": "string",
+          "description": "Tags related to the experience highlight."
+        }
+      },
+      "required": ["details", "tags"]
+    },
+    "WorkExperience": {
+      "type": "object",
+      "properties": {
+        "workplace": {
+          "type": "string",
+          "description": "Name of the workplace."
+        },
+        "tenures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WorkTenure"
+          },
+          "description": "List of work tenures at the workplace."
+        },
+        "highlights": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExperienceHighlight"
+          },
+          "description": "List of experience highlights at the workplace."
+        }
+      },
+      "required": ["workplace", "tenures", "highlights"]
+    },
+    "Testimony": {
+      "type": "object",
+      "properties": {
+        "endorser": {
+          "type": "string",
+          "description": "Name of the person who provided the testimony."
+        },
+        "details": {
+          "type": "string",
+          "description": "Details of the testimony."
+        }
+      },
+      "required": ["endorser", "details"]
+    },
+    "Person": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the person in 'FirstName LastName' format."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Contact number of the person in '+X (XXX) XXX-XXX' format."
+        },
+        "linkedIn": {
+          "type": "string",
+          "description": "LinkedIn profile link in '/in/XXXXX/' format."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address of the person."
+        },
+        "webPresence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WebPresence"
+          },
+          "description": "Other online web presence of the person."
+        }
+      },
+      "required": ["name", "phone", "linkedIn", "email", "webPresence"]
+    },
+    "resume": {
+      "type": "object",
+      "properties": {
+        "person": {
+          "$ref": "#/definitions/Person",
+          "description": "Person information that can help identify the subject of the resume."
+        },
+        "workExperiences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WorkExperience"
+          },
+          "description": "Work experiences with information about the workplace, type of employment, start & end dates, and experience details."
+        },
+        "testimonies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Testimony"
+          },
+          "description": "Testimonies given to the person and brief information about the endorser."
+        }
+      },
+      "required": ["person", "workExperiences", "testimonies"]
+    }
+  }
+}
