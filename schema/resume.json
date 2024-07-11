@@ -1,146 +1,237 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json",
-  "title": "Resume",
-  "type": "object",
-  "properties": {
-    "person": {
-      "$ref": "#/definitions/Person",
-      "description": "Person information that can help identify the subject of the resume."
-    },
-    "workExperiences": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/WorkExperience"
-      },
-      "description": "Work experiences with information about the workplace, type of employment, start & end dates, and experience details."
-    },
-    "testimonies": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Testimony"
-      },
-      "description": "Testimonies given to the person and brief information about the endorser."
-    }
-  },
-  "required": ["person", "workExperiences", "testimonies"],
-  "definitions": {
-    "WebPresence": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the web presence platform."
+    "$id": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Candidate": {
+            "properties": {
+                "email": {
+                    "description": "Contact email of the candidate.",
+                    "title": "email",
+                    "type": "string"
+                },
+                "linkedIn": {
+                    "description": "LinkedIn profile of the candidate.",
+                    "title": "linkedIn",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the candidate.",
+                    "title": "name",
+                    "type": "string"
+                },
+                "phone": {
+                    "description": "Contact phone number of the candidate e.g. +1 (234) 567-8910.",
+                    "title": "phone",
+                    "type": "string"
+                },
+                "webPresence": {
+                    "description": "Web presences of the candidate.",
+                    "items": {
+                        "$ref": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json#/definitions/WebPresence"
+                    },
+                    "title": "webPresence",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "email",
+                "linkedIn",
+                "name",
+                "phone",
+                "webPresence"
+            ],
+            "title": "Candidate",
+            "type": "object"
         },
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "description": "URL of the web presence platform starting with 'https://'."
+        "HighestEducation": {
+            "properties": {
+                "institution": {
+                    "description": "Name of the institution where the candidate was instructed in the formal\neducation.",
+                    "title": "institution",
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Name of the country the institution is located in.",
+                    "title": "location",
+                    "type": "string"
+                },
+                "program": {
+                    "description": "The program attended by the candidate, e.g. Master of Computer Science.",
+                    "title": "program",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "institution",
+                "location",
+                "program"
+            ],
+            "title": "HighestEducation",
+            "type": "object"
+        },
+        "Testimony": {
+            "properties": {
+                "endorser": {
+                    "description": "The person who provided the testimony to the candidate.",
+                    "title": "endorser",
+                    "type": "string"
+                },
+                "organization": {
+                    "description": "The organization the endorser belonged to or currently belongs to.",
+                    "title": "organization",
+                    "type": "string"
+                },
+                "statement": {
+                    "description": "The testimony given by the endorser about the candidate.",
+                    "title": "statement",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "endorser",
+                "statement"
+            ],
+            "title": "Testimony",
+            "type": "object"
+        },
+        "WebPresence": {
+            "properties": {
+                "id": {
+                    "description": "A reference to the user's space in the platform, e.g. repository, username,\nemail, handle, channel, etc.",
+                    "title": "id",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the platform, e.g. GitHub, YouTube, etc.",
+                    "title": "name",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name"
+            ],
+            "title": "WebPresence",
+            "type": "object"
+        },
+        "WorkExperience": {
+            "properties": {
+                "highlights": {
+                    "description": "Success stories, achievements or responsibilities handled by the candidate.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "highlights",
+                    "type": "array"
+                },
+                "responsibilities": {
+                    "description": "Roles and responsibilities. A job title can never adequeately describe the\nwork done by a candidate. List the job title and responsibilities handled\nby the candidate",
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "responsibilities",
+                    "type": "array"
+                },
+                "technologies": {
+                    "description": "Technologies and tools that the candidate used in the workplace to fulfill\nthe role and responsibility.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "technologies",
+                    "type": "array"
+                },
+                "terms": {
+                    "description": "Describes the start date, end date and type of employment during that\nperiod.",
+                    "items": {
+                        "$ref": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json#/definitions/WorkTerm"
+                    },
+                    "title": "terms",
+                    "type": "array"
+                },
+                "workplace": {
+                    "description": "Name of the workplace the candidate works (or worked) in.",
+                    "title": "workplace",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "highlights",
+                "responsibilities",
+                "technologies",
+                "terms",
+                "workplace"
+            ],
+            "title": "WorkExperience",
+            "type": "object"
+        },
+        "WorkTerm": {
+            "properties": {
+                "employmentType": {
+                    "description": "Emplyoment type for the term.",
+                    "enum": [
+                        "contract",
+                        "full-time",
+                        "part-time",
+                        "research"
+                    ],
+                    "title": "employmentType",
+                    "type": "string"
+                },
+                "end": {
+                    "description": "The end date in YYYY-MM-DD format for the term. The end date is after the\nstart date.",
+                    "title": "end",
+                    "type": "string"
+                },
+                "start": {
+                    "description": "The start date in YYYY-MM-DD format for the term. The start date is earlier\nthan the end date.",
+                    "title": "start",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "employmentType",
+                "end",
+                "start"
+            ],
+            "title": "WorkTerm",
+            "type": "object"
         }
-      },
-      "required": ["name", "url"]
     },
-    "WorkTenure": {
-      "type": "object",
-      "properties": {
-        "start": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Start date of the work tenure."
+    "description": "A Resume with candidate information, work experiences, testimonies and\neducation information.",
+    "properties": {
+        "candidate": {
+            "$ref": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json#/definitions/Candidate",
+            "description": "Information about the candidate who is the subject of this resume.",
+            "title": "candidate"
         },
-        "end": {
-          "type": "string",
-          "format": "date-time",
-          "description": "End date of the work tenure."
+        "highestEducation": {
+            "$ref": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json#/definitions/HighestEducation",
+            "description": "The highest level of education acquired by the candidate",
+            "title": "highestEducation"
         },
-        "employmentType": {
-          "type": "string",
-          "description": "Type of employment (e.g., Full-time, Part-time)."
+        "testimonies": {
+            "description": "Testimonies given to the candidate and brief information about the endorser",
+            "items": {
+                "$ref": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json#/definitions/Testimony"
+            },
+            "title": "testimonies",
+            "type": "array"
+        },
+        "workExperiences": {
+            "description": "Work experiences with information about the workplace, type of employment,\nstart & end dates and experience details. The workExperiences are ordered\nthe most recent to the oldest.",
+            "items": {
+                "$ref": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json#/definitions/WorkExperience"
+            },
+            "title": "workExperiences",
+            "type": "array"
         }
-      },
-      "required": ["start", "end", "employmentType"]
     },
-    "ExperienceHighlight": {
-      "type": "object",
-      "properties": {
-        "details": {
-          "type": "string",
-          "description": "Details of the experience highlight."
-        },
-        "tags": {
-          "type": "string",
-          "description": "Tags related to the experience highlight."
-        }
-      },
-      "required": ["details", "tags"]
-    },
-    "WorkExperience": {
-      "type": "object",
-      "properties": {
-        "workplace": {
-          "type": "string",
-          "description": "Name of the workplace."
-        },
-        "tenures": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/WorkTenure"
-          },
-          "description": "List of work tenures at the workplace."
-        },
-        "highlights": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ExperienceHighlight"
-          },
-          "description": "List of experience highlights at the workplace."
-        }
-      },
-      "required": ["workplace", "tenures", "highlights"]
-    },
-    "Testimony": {
-      "type": "object",
-      "properties": {
-        "endorser": {
-          "type": "string",
-          "description": "Name of the person who provided the testimony."
-        },
-        "details": {
-          "type": "string",
-          "description": "Details of the testimony."
-        }
-      },
-      "required": ["endorser", "details"]
-    },
-    "Person": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the person in 'FirstName LastName' format."
-        },
-        "phone": {
-          "type": "string",
-          "description": "Contact number of the person in '+X (XXX) XXX-XXX' format."
-        },
-        "linkedIn": {
-          "type": "string",
-          "description": "LinkedIn profile link in '/in/XXXXX/' format."
-        },
-        "email": {
-          "type": "string",
-          "format": "email",
-          "description": "Email address of the person."
-        },
-        "webPresence": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/WebPresence"
-          },
-          "description": "Other online web presence of the person."
-        }
-      },
-      "required": ["name", "phone", "linkedIn", "email", "webPresence"]
-    }
-  }
+    "required": [
+        "candidate",
+        "highestEducation",
+        "testimonies",
+        "workExperiences"
+    ],
+    "type": "object"
 }
+
