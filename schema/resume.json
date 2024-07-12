@@ -24,6 +24,19 @@
                     "title": "phone",
                     "type": "string"
                 },
+                "quote": {
+                    "description": "A brief quote by the candidate to describe themselves.",
+                    "title": "quote",
+                    "type": "string"
+                },
+                "titles": {
+                    "description": "Job titles and highest education",
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "titles",
+                    "type": "array"
+                },
                 "webPresence": {
                     "description": "Web presences of the candidate.",
                     "items": {
@@ -38,35 +51,11 @@
                 "linkedIn",
                 "name",
                 "phone",
+                "quote",
+                "titles",
                 "webPresence"
             ],
             "title": "Candidate",
-            "type": "object"
-        },
-        "HighestEducation": {
-            "properties": {
-                "institution": {
-                    "description": "Name of the institution where the candidate was instructed in the formal\neducation.",
-                    "title": "institution",
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Name of the country the institution is located in.",
-                    "title": "location",
-                    "type": "string"
-                },
-                "program": {
-                    "description": "The program attended by the candidate, e.g. Master of Computer Science.",
-                    "title": "program",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "institution",
-                "location",
-                "program"
-            ],
-            "title": "HighestEducation",
             "type": "object"
         },
         "Testimony": {
@@ -140,13 +129,10 @@
                     "title": "technologies",
                     "type": "array"
                 },
-                "terms": {
+                "term": {
+                    "$ref": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json#/definitions/WorkTerm",
                     "description": "Describes the start date, end date and type of employment during that\nperiod.",
-                    "items": {
-                        "$ref": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json#/definitions/WorkTerm"
-                    },
-                    "title": "terms",
-                    "type": "array"
+                    "title": "term"
                 },
                 "workplace": {
                     "description": "Name of the workplace the candidate works (or worked) in.",
@@ -158,7 +144,7 @@
                 "highlights",
                 "responsibilities",
                 "technologies",
-                "terms",
+                "term",
                 "workplace"
             ],
             "title": "WorkExperience",
@@ -166,6 +152,11 @@
         },
         "WorkTerm": {
             "properties": {
+                "duration": {
+                    "description": "Work duration in text format, it could be a single period or multiple\nsingle e.g. \"Jan'23-Dec'23\"\nmultiple e.g. \"Jan'23-Apr'23, Jun'23-Jun'24\"",
+                    "title": "duration",
+                    "type": "string"
+                },
                 "employmentType": {
                     "description": "Emplyoment type for the term.",
                     "enum": [
@@ -176,22 +167,11 @@
                     ],
                     "title": "employmentType",
                     "type": "string"
-                },
-                "end": {
-                    "description": "The end date in YYYY-MM-DD format for the term. The end date is after the\nstart date.",
-                    "title": "end",
-                    "type": "string"
-                },
-                "start": {
-                    "description": "The start date in YYYY-MM-DD format for the term. The start date is earlier\nthan the end date.",
-                    "title": "start",
-                    "type": "string"
                 }
             },
             "required": [
-                "employmentType",
-                "end",
-                "start"
+                "duration",
+                "employmentType"
             ],
             "title": "WorkTerm",
             "type": "object"
@@ -203,11 +183,6 @@
             "$ref": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json#/definitions/Candidate",
             "description": "Information about the candidate who is the subject of this resume.",
             "title": "candidate"
-        },
-        "highestEducation": {
-            "$ref": "https://raw.githubusercontent.com/the-least/impact/main/schema/resume.json#/definitions/HighestEducation",
-            "description": "The highest level of education acquired by the candidate",
-            "title": "highestEducation"
         },
         "testimonies": {
             "description": "Testimonies given to the candidate and brief information about the endorser",
@@ -228,7 +203,6 @@
     },
     "required": [
         "candidate",
-        "highestEducation",
         "testimonies",
         "workExperiences"
     ],
