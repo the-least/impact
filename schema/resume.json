@@ -160,10 +160,10 @@
                 "employmentType": {
                     "description": "Emplyoment type for the term.",
                     "enum": [
-                        "contract",
-                        "full-time",
-                        "part-time",
-                        "research"
+                        "consultant",
+                        "education",
+                        "personal",
+                        "work"
                     ],
                     "title": "employmentType",
                     "type": "string"
